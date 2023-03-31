@@ -103,7 +103,8 @@ RCT_EXPORT_METHOD(miniProgramShare:(NSDictionary *)order)
   }
 }
 
-RCT_EXPORT_METHOD(shareToWechat:(NSString *)pdfurl type:(NSString *)pdfname)
+//分享pdf文件
+RCT_EXPORT_METHOD(shareFileToWechat:(NSString *)pdfurl type:(NSString *)pdfname)
 {
   //文件数据
   [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
@@ -134,30 +135,30 @@ RCT_EXPORT_METHOD(shareToWechat:(NSString *)pdfurl type:(NSString *)pdfname)
 }
 
 
-//        NSURL *relativeToURL = [NSURL URLWithString:m.url ];//必须先下载，否则无法查看文件内容
+//分享图片
 
 
-//RCT_EXPORT_METHOD(shareToWechat:(NSString *)base64 type:(NSString *)type)
-//{
-//  NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:NSDataBase64DecodingIgnoreUnknownCharacters];
-//  UIImage *image = [UIImage imageWithData:imageData];
-//  imageData = UIImageJPEGRepresentation(image, 1.0f);
-//
-//  WXImageObject *imageObject = [WXImageObject object];
-//  imageObject.imageData = imageData;
-//
-//  WXMediaMessage *message = [WXMediaMessage message];
-////  NSString *filePath = [[NSBundle mainBundle] pathForResource:@"res5"
-////                                                       ofType:@"jpg"];
-////  message.thumbData = [NSData dataWithContentsOfFile:filePath];
-//  message.mediaObject = imageObject;
-//
-//  SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
-//  req.bText = NO;
-//  req.message = message;
-//  req.scene = [type isEqualToString:@"1"]?WXSceneSession:WXSceneTimeline;
-//  [WXApi sendReq:req completion:nil];
-//}
+RCT_EXPORT_METHOD(shareToWechat:(NSString *)base64 type:(NSString *)type)
+{
+  NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:NSDataBase64DecodingIgnoreUnknownCharacters];
+  UIImage *image = [UIImage imageWithData:imageData];
+  imageData = UIImageJPEGRepresentation(image, 1.0f);
+
+  WXImageObject *imageObject = [WXImageObject object];
+  imageObject.imageData = imageData;
+
+  WXMediaMessage *message = [WXMediaMessage message];
+//  NSString *filePath = [[NSBundle mainBundle] pathForResource:@"res5"
+//                                                       ofType:@"jpg"];
+//  message.thumbData = [NSData dataWithContentsOfFile:filePath];
+  message.mediaObject = imageObject;
+
+  SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
+  req.bText = NO;
+  req.message = message;
+  req.scene = [type isEqualToString:@"1"]?WXSceneSession:WXSceneTimeline;
+  [WXApi sendReq:req completion:nil];
+}
 
 
 + (BOOL)requiresMainQueueSetup
